@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="../vue.js"></script>
+    <style>
+        .isFinished{
+            text-decoration:line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input v-model="newItem" @keyup.enter="addNew">
+        <h1 v-text="title"></h1>
+        <ul><li v-for="item in items" v-bind:class="{isFinished: item.isFinished}" v-on:click="toggleFinished(item)">{{item.label}}</li></ul>
+    </div>
+    <script>
+        var Stor_key = 'todo-vuejs'
+//        import Main from './main.js'
+//        console.log(Main)
+//        export defalut {
+//            data:function () {
+        var app3  =new Vue({
+            el: '#app',
+            data:function () {
+                return {
+                    title:'this is a todo list',
+                    items:[
+                        {
+                            label:'coding',
+                            isFinished:true
+                    },{
+                            label:'walking',
+                            isFinished:false
+                        }
+                    ],
+                    newItem:''
+                }
+            },
+            methods:{
+                toggleFinished: function (item) {
+                    item.isFinished = !item.isFinished;
+                },
+                addNew:function () {
+                    this.items.push({
+                        label:this.newItem,
+                        isFinished:false
+                    })
+                    this.newItem = ''
+                }
+            },
+            fetch(){
+                return JSON.parse(window.localStorage.getItem(Stor_key) || '[]')
+            },
+            save(items){
+                window.localStorage.setItem(Stor_key,JSON.stringify(items))
+            }
+        })
+
+        //本地储存
+        var Storage_key = 'todos-vuejs'
+
+    </script>
+</body>
+</html>

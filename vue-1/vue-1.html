@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="../vue.js"></script>
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s
+        }
+        .fade-enter, .fade-leave-active {
+            opacity: 0
+        }
+    </style>
+</head>
+<body>
+    <div id="app-3"><p v-if="seen">NOw you see me</p></div>
+    <div id="demo">
+        <button v-on:click="show = !show">
+            Toggle
+        </button>
+        <transition name="fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol></div>
+    <div id="app-5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">Reverse</button>
+    </div>
+    <div id="app-6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+    <div id="app-7">
+        <ol>
+            <!-- Now we provide each todo-item with the todo object    -->
+            <!-- it's representing, so that its content can be dynamic -->
+            <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+        </ol>
+    </div>
+
+
+    <script>
+        //v-if判断
+        var app3 = new Vue({
+            el:'#app-3',
+            data:{
+                seen:true
+            }
+        })
+        //动画效果  淡入淡出
+        new Vue({
+            el: '#demo',
+            data: {
+                show: true
+            }
+        })
+        //for
+        var app4 = new Vue({
+            el:'#app-4',
+            data:{todos:[
+                {text:'Learn Java'},
+                {text:'Build someing'},
+                {text:'Build'}
+            ]}
+        })
+        // 数据绑定
+        var app5 = new Vue({
+            el:'#app-5',
+            data: {
+                message:'Hello '
+            },
+            methods:{
+                reverseMessage:function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+        //双向绑定
+        var app6 = new Vue({
+            el:'#app-6',
+            data:{
+                message: 'Hello Vue'
+            }
+        })
+        //组件   Define a new component called todo-item
+        Vue.component('todo-item',{
+            props:['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                    {text: 'vegetables'},
+                    {text: 'cheese'},
+                    {text: 'Whatever else'}]
+            }
+        })
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+        //
+
+    </script>
+</body>
+</html>

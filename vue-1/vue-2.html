@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="example">
+    <p>{{data}}</p>
+
+</div>
+</div>
+
+<script>
+    var data = {a: 1}
+    var vm = new Vue({
+        el:'#example',
+        data: data
+    })
+    console.log("data=",data.a);
+    console.log("vm.data = ",vm.a);
+
+    vm.$data === data // ->true
+    vm.$el === document.getElementById('example') // ->true
+
+    //
+    vm.$watch('a',function (newVal,oldVal) {
+        //这个回调
+    })
++
+</script>
+</body>
+</html>
